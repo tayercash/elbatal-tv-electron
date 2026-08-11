@@ -1,0 +1,57 @@
+{
+  "name": "elbataltv",
+  "productName": "Elbatal TV",
+  "version": "1.7.0",
+  "description": "Elbatal TV",
+  "main": "main.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV='development' electron .",
+    "build": "cross-env NODE_ENV='production' electron-builder"
+  },
+  "build": {
+    "appId": "com.mouscripts.elbataltv",
+    "productName": "Elbatal TV",
+    "protocols": {
+      "name": "elbataltv",
+      "schemes": [
+        "elbataltv"
+      ]
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icons/win/icon.ico"
+    },
+    "linux": {
+      "target": "AppImage"
+    },
+    "mac": {
+      "target": "dmg"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "electron": "^40.7.0",
+    "electron-builder": "^26.8.1",
+    "electron-rebuild": "^2.0.3"
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.16",
+    "auto-launch": "^5.0.6",
+    "cors": "^2.8.5",
+    "cross-fetch": "^4.0.0",
+    "execa": "^9.6.0",
+    "express": "^4.21.0",
+    "ffmpeg-static": "^5.2.0",
+    "got": "^11.8.6",
+    "node-machine-id": "^1.1.12",
+    "puppeteer-core": "^24.41.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "socket.io-client": "^4.8.1",
+    "toastify-js": "^1.12.0",
+    "yt-dlp-wrap": "^2.3.12"
+  }
+}

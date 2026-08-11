@@ -1,0 +1,6 @@
+node_modules
+.DS_Store
+dist
+browser-data
+moucookies
+config.local.json

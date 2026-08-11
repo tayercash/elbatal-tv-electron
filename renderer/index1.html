@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Elbatal TV</title>
+    <link rel="stylesheet" href="files/fonts/noto-sans-arabic/font.css">
+    <link rel="stylesheet" href="files/fonts/font-awesome/css/all.min.css">
+    <link rel="stylesheet" href="files/css/navigation.css">
+    <link rel="stylesheet" href="files/css/main.css">
+    <link rel="stylesheet" href="files/css/index.css">
+    <link rel="stylesheet" href="files/css/popup.css">
+    <link rel="stylesheet" href="files/css/toastify.css">
+
+</head>
+
+<body>
+    <div class="mou_background"></div>
+    <div class="full_app_loader"></div>
+
+    <iframe id="servers_frame" class="main_iframe" frameborder="0"></iframe>
+    <iframe id="watch_frame" class="main_iframe" frameborder="0"></iframe>
+
+    <div class="sidenav" id="main_sidenav">
+        <div class="app_sidenav">
+
+            <div class="sidenav_header">
+                <img src="files/images/logo.png">
+            </div>
+            <div class="sidenav_body" data-add_tabindex>
+                <div class="sidenav_btn" onclick="open_favs()">
+                    <span class="icon"><i class="fad fa-heart"></i></span>
+                    <span class="text">المفضلة</span>
+                </div>
+                <div class="sidenav_btn" onclick="open_downloads()">
+                    <span class="icon"><i class="fas fa-download"></i></span>
+                    <span class="text">التنزيلات</span>
+                </div>
+                <div class="sidenav_btn" onclick="open_settings()">
+                    <span class="icon"><i class="fas fa-cog"></i></span>
+                    <span class="text">الإعدادات</span>
+                </div>
+                <!-- <div class="side_nav_drop_down_container">
+                    <div class="sidenav_btn">
+                        <span class="icon"><i class="fas fa-share"></i></span>
+                        <span class="text">مشاركة التطبيق</span>
+                    </div>
+                    <div class="side_nav_drop_down">
+                        <div class="sidenav_btn">
+                            <span class="icon"><i class="fas fa-share"></i></span>
+                            <span class="text">مشاركة التطبيق ❤️</span>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="sidenav_btn" onclick="share_app()">
+                    <span class="icon"><i class="fas fa-share"></i></span>
+                    <span class="text">مشاركة التطبيق 💖</span>
+                </div>
+
+                <div class="sidenav_btn d-none" onclick="open_contact_us()">
+                    <span class="icon"><i class="fas fa-envelope"></i></span>
+                    <span class="text">اتصل بنا</span>
+                </div>
+                <div class="sidenav_btn code_activation" disabled>
+                    <span class="icon"><i class="fas fa-key"></i></span>
+                    <span class="text">حذف الإعلانات بكود تفعيل</span>
+                </div>
+
+                <div class="sidenav_btn" id="telegram" onclick="open_external_link(`https://t.me/Elbatal_Tv`)">
+                    <span class="icon"><i class="fab fa-telegram-plane fa-lg"></i></span>
+                    <span class="text">تيلجرام</span>
+                </div>
+
+                <div class="app_icons d-none">
+                    <a target="_blank" href="https://t.me/Elbatal_Tv" id="telegram" aria-label="telegram"><i
+                            class="fab fa-telegram-plane fa-lg"></i></a>
+                    <a target="_blank" href="https://chat.whatsapp.com/DquBHLhyZvLEn5m3pr0llu" id="whats_app"
+                        aria-label="whats app"><i class="fab fa-whatsapp fa-lg"></i></a>
+                    <a target="_blank" href="https://www.messenger.com/t/61558630476296" id="messanger"
+                        aria-label="messanger"><i class="fab fa-facebook-messenger fa-lg"></i></a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="mou_popup" id="ad_loading">
+        <div class="mou_popup_container mou_box_shadow">
+            <div class="mou_popup_header">
+                <span class="mou_pop_up_title">تحميل اعلان</span>
+                <span class="close_popup_btn" data-dismisspopup><i class="far fa-times fa-lg"></i></span>
+            </div>
+            <div class="mou_popup_body">
+
+                <div class="mou_alert loading_ad_msg">
+                    <div class="mou_alert-icon"><i class="fas fa-circle-notch fa-spin"></i></div>
+                    <div class="mou_alert-message">يرجي الانتظار حتي يتم
+                        تحميل
+                        الاعلان !</div>
+                </div>
+
+
+                <div class="ad_load_error">
+
+                    <div class="mou_alert mou_danger">
+                        <div class="mou_alert-icon"><i class="far fa-exclamation-circle"></i></div>
+                        <div class="mou_alert-message">حدث خطأ اثناء تحميل الإعلان .</div>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="mou_popup_footer flex_between">
+                <button class="mou_btn mou_box_shadow" data-dismisspopup="true">الرجوع</button>
+                <button class="mou_btn mou_box_shadow" onclick="refresh_ads()">اعادة المحاولة</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="mou_popup purchase_meth_popup" id="code_activation_popup">
+        <div class="mou_popup_container mou_box_shadow">
+            <div class="mou_popup_header">
+                <span class="mou_pop_up_title"><i class="fas fa-key"></i> حذف الاعلانات بكود التفعيل</span>
+            </div>
+            <div class="mou_popup_body">
+                <div class="code_container">
+                    <div class="code" id="user_code">
+                        <input type="number" maxlength="1" min="0" max="9" id="otp1">
+                        <input type="number" maxlength="1" min="0" max="9" id="otp2">
+                        <input type="number" maxlength="1" min="0" max="9" id="otp3">
+                        <input type="number" maxlength="1" min="0" max="9" id="otp4">
+                        <input type="number" maxlength="1" min="0" max="9" id="otp5">
+                        <input type="number" maxlength="1" min="0" max="9" id="otp6">
+                    </div>
+                    <div class="half">
+                        <button class="mou_btn" id="get_my_activation_code"><i class="far fa-external-link"></i> احضار
+                            كود
+                            التفعيل</button>
+                        <button class="mou_btn" id="paste_active_code"><i class="far fa-paste"></i> لصق الكود</button>
+                        <button class="mou_btn" id="how_to_get_code"><i class="fal fa-play-circle"></i> كيفية احضار
+                            الكود</button>
+                    </div>
+                </div>
+            </div>
+            <div class="mou_popup_footer flex_between">
+                <button class="mou_btn mou_box_shadow" data-dismisspopup="true">الرجوع</button>
+                <button class="mou_btn mou_box_shadow" id="active_with_code">تفعيل</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="mou_popup full_popup" id="contact_us">
+        <div class="mou_popup_container mou_box_shadow">
+            <div class="mou_popup_header">
+                <span class="mou_pop_up_title"><i class="fas fa-envelope"></i> اتصل بنا</span>
+                <span class="close_popup_btn" data-dismisspopup><i class="far fa-times fa-lg"></i></span>
+            </div>
+            <div class="mou_popup_body">
+
+
+                <div class="mou_input_container prepend mou_box_shadow">
+                    <div class="prepend_input"><span>اسمك</span></div>
+                    <input class="rtl input placertl" id="contact_user_name" type="text">
+                </div>
+
+
+                <div class="mou_input_container prepend mou_box_shadow">
+                    <div class="prepend_input"><span>ايميلك</span></div>
+                    <input class="rtl input placertl" type="text" id="contact_email">
+                </div>
+
+                <div class="mou_input_container prepend mou_box_shadow">
+                    <div class="prepend_input"><span>الرساله</span></div>
+                    <textarea class="rtl input placertl" id="contact_message" style="min-height: 400px;"></textarea>
+                </div>
+
+                <button class="mou_btn" onclick="contact_us_submit()"><i class="fas fa-paper-plane"></i> ارسال</button>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="mou_popup full_popup" id="settings">
+        <div class="mou_popup_container mou_box_shadow">
+            <div class="mou_popup_header">
+                <span class="mou_pop_up_title"><i class="fas fa-cog"></i> الإعدادات</span>
+                <span class="close_popup_btn" data-dismisspopup><i class="far fa-times fa-lg"></i></span>
+            </div>
+            <div class="mou_popup_body">
+
+                <div class="settings_container">
+                    <div class="setting_container download_settings android_setting">
+                        <span class="header_title">التنزيل</span>
+
+                        <div class="setting_div_container">
+                            <label for="download_app_setting">اختيار تطبيق التحميل :</label>
+                            <select class="mou_btn mou_box_shadow" name="download_app_setting"
+                                id="download_app_setting">
+                                <option value="adm" selected="selected">ADM</option>
+                                <option value="1dm">1DM</option>
+                                <option value="1dm+">1DM+</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="setting_container notify_settings android_setting">
+                        <span class="header_title">الإشعارات</span>
+                        <div class="notify_switches">
+
+                            <div class="setting_container">
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setting_container player_settings">
+                        <span class="header_title">مشغل الفيديوهات</span>
+
+                        <div class="setting_div_container android_setting">
+                            <label for="watching_app_setting">اختيار تطبيق المشغل :</label>
+                            <select class="mou_btn mou_box_shadow" name="watching_app_setting"
+                                id="watching_app_setting">
+                                <option value="Elbatal">ELPlayer</option>
+                                <option value="MX_Player">MX Player</option>
+                                <option value="MX_Player_Pro">MX Player Pro</option>
+                            </select>
+                        </div>
+
+                        <div class="setting_div_container">
+                            <label for="video_continue_watch">ميزة متابعة المشاهدة : </label>
+                            <label for="video_continue_watch" class="switch">
+                                <input id="video_continue_watch" type="checkbox">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="setting_container">
+                        <span class="header_title">اعدادات المصادر</span>
+
+                        <div class="setting_div_container">
+                            <label for="video_continue_watch">إصلاح واعادة تعين للمصادر : </label>
+                            <button class="mou_btn mou_box_shadow" id="fix_watch_servers">إصلاح</button>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- <div class="tabs_container" data-tabs_container="settings_tabs">
+                    <div class="tab_contnet active" data-tab_id="main">
+
+                        <div class="setting_container">
+                            <label for="download_app_setting">اختيار تطبيق التحميل :</label>
+
+                            <select class="mou_btn mou_box_shadow" name="download_app_setting"
+                                id="download_app_setting">
+                                <option value="adm" selected="selected">ADM</option>
+                                <option value="1dm">1DM</option>
+                                <option value="1dm+">1DM+</option>
+                            </select>
+
+                        </div>
+
+                        <div class="setting_container">
+                            <label for="video_continue_watch">تفعيل متابعة المشاهدة :</label>
+
+                            <label for="video_continue_watch" class="switch">
+                                <input id="video_continue_watch" type="checkbox">
+                                <span class="slider round"></span>
+                            </label>
+
+                        </div>
+
+                    </div>
+                    <div class="tab_contnet" data-tab_id="download">
+                    </div> -->
+            </div>
+
+            <div class="mou_popup_footer">
+                <button class="mou_btn mou_box_shadow" data-dismisspopup="true">الرجوع</button>
+                <button class="mou_btn mou_box_shadow" id="Save_settings">حفظ</button>
+                <!-- <div class="tabs_buttons_container">
+                <div class="tabs_buttons">
+                    <span class="tab_button active" data-tabs_container="settings_tabs"
+                        data-open_tab_id="main">اساسي</span>
+                    <span class="tab_button" data-tabs_container="settings_tabs"
+                        data-open_tab_id="download">التحميل</span>
+                </div>
+            </div> -->
+
+            </div>
+        </div>
+    </div>
+
+    <div class="mou_popup mou_bottom_pop" id="watch_trailer_popup">
+        <div class="mou_popup_container mou_box_shadow">
+            <div class="mou_popup_header">
+                <span class="mou_pop_up_title">المشاهدة</span>
+                <span class="close_popup" data-closepopup="watch_trailer_popup"></span>
+            </div>
+            <div class="mou_popup_body">
+
+                <div id="trailer_iframe_container">
+                    <iframe id="trailer_iframe" width="100%" height="300" frameborder="0" allowfullscreen></iframe>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="mou_popup full_popup" id="favs">
+        <div class="mou_popup_container mou_box_shadow">
+            <div class="mou_popup_header">
+                <span class="mou_pop_up_title"><i class="fad fa-heart"></i> المفضلة</span>
+                <span class="close_popup_btn" data-dismisspopup><i class="far fa-times fa-lg"></i></span>
+            </div>
+            <div class="mou_popup_body">
+                <div class="fav_posts" id="fav_posts">
+
+
+
+                </div>
+            </div>
+            <div class="mou_popup_footer" style="padding: 0;display: none;">
+
+
+            </div>
+        </div>
+    </div> -->
+
+    <div class="mou_popup full_popup" id="full_ch_search">
+        <div class="mou_popup_container mou_box_shadow">
+            <div class="mou_popup_header">
+                <span class="mou_pop_up_title">البحث عن قناة : <span class="full_ch_searching_for"></span></span>
+                <span class="close_popup_btn" data-dismisspopup><i class="far fa-times fa-lg"></i></span>
+            </div>
+            <div class="mou_popup_body">
+
+                <div class="search_servers_container">
+
+
+                </div>
+
+            </div>
+            <!-- <div class="mou_popup_footer flex_between">
+                <button class="mou_btn mou_box_shadow" data-dismisspopup="true">الرجوع</button>
+                <button class="mou_btn mou_box_shadow edit_channel_btn d-none" data-edit_ch_id="0"
+                    id="channel_edit()">تعديل</button>
+            </div> -->
+        </div>
+    </div>
+
+    <div class="mou_popup mou_bottom_pop" id="ch_search">
+        <div class="mou_popup_container mou_box_shadow">
+            <div class="mou_popup_header">
+                <span class="mou_pop_up_title">مصادر مشاهدة قناة : <span class="ch_searching_for"></span></span>
+            </div>
+            <div class="mou_popup_body">
+                <div class="watch_srces_btns" id="res_ch_search"></div>
+                <div class="mou_ad" id="ch_ad_tag"></div>
+            </div>
+            <!-- <div class="mou_popup_footer flex_between">
+                <button class="mou_btn mou_box_shadow" data-dismisspopup="true">الرجوع</button>
+                <button class="mou_btn mou_box_shadow edit_channel_btn" data-edit_ch_id="0"
+                    id="channel_edit()">تعديل</button>
+            </div> -->
+        </div>
+    </div>
+
+    <div class="mou_popup" id="app_info">
+        <div class="mou_popup_container mou_box_shadow">
+            <div class="mou_popup_header">
+                <span class="mou_pop_up_title">معلومات عن البرنامج</span>
+            </div>
+            <div class="mou_popup_body" id="app_info_data">
+                <div class="info_container">
+                    <h1>Elbatal TV</h1>
+                    <a class="an_info">اصدار البرنامج : <span id="app_version"></span></a>
+                    <a class="an_info">إصدار التحديث الداخلي : <span id="app_files_version"></span></a>
+                </div>
+                <div class="info_container webview_info">
+                    <hr>
+                    <h1>WebView</h1>
+                    <a class="an_info"> البرنامج : <span id="webview_app"></span></a>
+                    <a class="an_info">رقم الإصدار : <span id="webview_app_version"></span></a>
+                    <a>تحقق من تحديث برنامج الWebView : <span class="mou_btn" id="Update_webview_app">تحقق</span></a>
+                </div>
+                <hr>
+                <div class="info_container">
+                    <h1>ابعاد الشاشة</h1>
+                    <a class="an_info">عرض الشاشة : <span id="screen_width"></span></a>
+                    <a class="an_info">ارتفاع الشاشة : <span id="screen_height"></span></a>
+                    <a class="an_info">Screen DPI : <span id="screen_dpi"></span></a>
+                </div>
+            </div>
+            <div class="mou_popup_footer flex_between">
+                <button class="mou_btn mou_box_shadow" data-dismisspopup="true">الرجوع</button>
+                <button class="mou_btn" onclick="copy_app_info()">نسخ</button>
+            </div>
+        </div>
+    </div>
+    <div class="mou_popup mou_bottom_pop for_play" id="My_Devices_popup">
+        <div class="mou_popup_container mou_box_shadow">
+            <div class="mou_popup_header">
+                <span class="mou_pop_up_title for_logout_title"><i class="fas fa-phone-laptop"></i> أجهزتي</span>
+                <span class="mou_pop_up_title for_play_title"><i class="fas fa-phone-laptop"></i> تشغيل علي جهاز
+                    اخر</span>
+                <span class="close_popup_btn" data-dismisspopup><i class="far fa-times fa-lg"></i></span>
+            </div>
+            <div class="mou_popup_body">
+
+                <div class="mou_alert myDevice_loading">
+                    <div class="mou_alert-icon"><i class="fas fa-circle-notch fa-spin"></i></div>
+                    <div class="mou_alert-message">جاري التحميل</div>
+                </div>
+
+                <div class="mydevices">
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation_container">
+        <div class="navigation">
+            <ul>
+                <li class="list active">
+                    <a data-full_iframe_target_url="home.html">
+                        <span class="icon">
+                            <i class="fas fa-home"></i>
+                        </span>
+                        <span class="text">الرئيسية</span>
+                    </a>
+                </li>
+                <li class="list" data-header_title="جدول المباريات">
+                    <a data-full_iframe_target_url="matches_table.html">
+                        <span class="icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </span>
+                        <span class="text">المباريات</span>
+                    </a>
+                </li>
+                <li class="list" data-header_title="القنوات المباشرة">
+                    <a data-full_iframe_target_url="chnnels.html">
+                        <span class="icon">
+                            <i class="fas fa-tv"></i>
+                        </span>
+                        <span class="text">القنوات</span>
+                    </a>
+                </li>
+
+                <li class="list" data-header_title="المفضلة">
+                    <a data-full_iframe_target_url="favs.html">
+                        <span class="icon">
+                            <i class="fas fa-heart"></i>
+                        </span>
+                        <span class="text">المفضلة</span>
+                    </a>
+                </li>
+
+                <li class="list" data-header_title="عني">
+                    <a data-full_iframe_target_url="profile.html">
+                        <span class="icon">
+                            <i class="fas fa-user"></i>
+                        </span>
+                        <span class="text">عني</span>
+                    </a>
+                </li>
+                <span class="indicator"></span>
+            </ul>
+        </div>
+    </div>
+
+    <div class="header">
+        <div class="header_container">
+            <div class="header_left">
+                <button class="mou_btn mou_box_shadow icon openside_nav"><i class="fas fa-bars"></i></button>
+                <!-- <div class="header_title_contaniner">
+                <div class="header_title" id="header_title">البطل<span id="extra_title"></span></div>
+            </div> -->
+                <a class="logo_container arrow_select" target_frame="main_iframe" target_url="home.html">
+                    <img src="files/images/logo.png" alt="" srcset="">
+                </a>
+            </div>
+            <div class="header_actions" id="header_actions">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="full_view">
+
+        <div class="full_view_container">
+            <div class="box side_btns_container">
+
+                <button class="sidenav_btn active" data-side_full_iframe_target_url="home.html">
+                    <span class="icon"><i class="fas fa-home"></i></span>
+                    <span class="text">الرئيسية</span>
+                </button>
+
+                <button class="sidenav_btn" data-side_full_iframe_target_url="matches_table.html">
+                    <span class="icon"><i class="fas fa-calendar-alt"></i></span>
+                    <span class="text">جدول المباريات</span>
+                </button>
+
+                <button class="sidenav_btn" data-side_full_iframe_target_url="chnnels.html">
+                    <span class="icon"><i class="fas fa-tv"></i></span>
+                    <span class="text">القنوات المباشرة</span>
+                </button>
+
+                <button class="sidenav_btn" data-side_full_iframe_target_url="favs.html">
+                    <span class="icon"><i class="fas fa-heart"></i></span>
+                    <span class="text">المفضلة</span>
+                </button>
+
+                <button class="sidenav_btn" data-side_full_iframe_target_url="profile.html">
+                    <span class="icon"><i class="fas fa-user"></i></span>
+                    <span class="text">البروفايل</span>
+                </button>
+
+
+            </div>
+            <div class="box" id="content" data-add_tabindex></div>
+
+        </div>
+    </div>
+
+    <script src="files/js/jquery.min.js"></script>
+    <script src="files/js/deobfuscator.js"></script>
+    <script src="files/js/evalCalls.js"></script>
+    <script src="files/js/socket-io.min.js"></script>
+    <script src="files/js/jqeury.mouagax.js"></script>
+    <script src="files/js/popup.js"></script>
+    <script src="files/js/navigation.js"></script>
+    <script src="files/js/settings.js"></script>
+    <script src="files/js/main.js"></script>
+    <script src="files/js/mouscripts.js"></script>
+    <script src="files/js/index.js"></script>
+    <script src="files/js/only_index.js"></script>
+    <script src="files/js/socket.js"></script>
+    <script src="files/js/share.js"></script>
+    <script src="files/js/toastify.js"></script>
+    <script src="files/js/cust_servers.js"></script>
+    <script>mou_channels_servers = [];</script>
+    <script src="files/js/crypto-js.min.js"></script>
+    <script src="files/js/pako.min.js"></script>
+    <script src="files/js/channels/yacine.js"></script>
+    <script src="files/js/channels/ostora.js"></script>
+    <script src="files/js/channels/mou_servers.js"></script>
+    <script src="files/js/channels/v3.js"></script>
+
+</body>
+
+</html>

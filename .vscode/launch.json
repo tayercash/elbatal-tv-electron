@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    
+    {
+      "type": "node", // Using Node.js for launching
+      "request": "launch",
+      "name": "Launch via npm", // The name of this configuration
+      "runtimeExecutable": "npm", // Specify npm as the executable
+      "runtimeArgs": [
+        "start" // Run the 'start' script from package.json
+      ],
+      "console": "integratedTerminal", // Output console
+      "internalConsoleOptions": "neverOpen"
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>القران الكريم</title>
+    <link rel="stylesheet" href="files/fonts/noto-sans-arabic/font.css">
+    <link rel="stylesheet" href="files/fonts/font-awesome/css/all.min.css">
+    <link rel="stylesheet" href="files/css/navigation.css">
+    <link rel="stylesheet" href="files/css/main.css">
+    <link rel="stylesheet" href="files/css/index.css">
+    <link rel="stylesheet" href="files/css/popup.css">
+    <link rel="stylesheet" href="files/css/quran.css">
+    <link rel="stylesheet" href="files/plyr/plyr.css">
+</head>
+
+<body>
+    <div class="mou_background"></div>
+
+    <div class="mou_popup" id="player_popup">
+        <div class="mou_popup_container mou_box_shadow">
+            <div class="mou_popup_header">
+                <span class="mou_pop_up_title" id="sora_popup_name"></span>
+
+                <span class="close_popup_btn" data-dismisspopup><i class="far fa-times fa-lg"></i></span>
+            </div>
+            <div class="mou_popup_body">
+
+                <div class="player_container">
+                    <audio id="player_audio" controls>
+                        <source type="audio/mp3" />
+                    </audio>
+                </div>
+
+            </div>
+     
+        </div>
+    </div>
+
+    <div class="header">
+        <div class="header_container">
+            <a class="logo_container">
+                <img src="files/images/logo.png">
+                <span class="website_name_container"> - القران الكريم
+            </a>
+            <div class="header_actions" id="header_actions">
+
+                <button class="mou_btn mou_action_btn toggle_page_function" data-func="play">
+                    <span class="icon"><i class="fas fa-play"></i></span>
+                    <span class="text">الإستماع</span>
+                </button>
+
+                <button class="mou_btn mou_action_btn close_iframe_btn" data-close_id="servers_frame">
+                    <span class="icon"><i class="far fa-long-arrow-left"></i></span>
+                    <span class="text">الرجوع</span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="main_container">
+        <div class="main">
+
+            <div class="reciters_container">
+                <div class="an_header_container">
+                    <span class="header_title">قائمة القراء</span>
+                </div>
+                <div class="full_reciters_lists">
+
+                </div>
+   
+            </div>
+            <div class="suwar_container hide">
+                <div class="an_header_container">
+                    <span class="header_title"><span class="reciter_name"></span></span>
+                    <div class="header_actions">
+                        <select name="rewaya" id="rewayat"></select>
+                    </div>
+                </div>
+                <div class="btns_list suwar">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="files/js/jquery.min.js"></script>
+    <script src="files/js/popup.js"></script>
+    <script src="files/js/navigation.js"></script>
+    <script src="files/js/settings.js"></script>
+    <script src="files/js/main.js"></script>
+    <script src="files/js/mouscripts.js"></script>
+    <script src="files/js/index.js"></script>
+    <script src="files/js/quran/suwar.js"></script>
+    <script src="files/js/quran/reciters.js"></script>
+    <script src="files/plyr/plyr.polyfilled.js"></script>
+    <script src="files/js/quran/quran.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+/* .mou_btn {
+    display: block;
+    position: relative;
+    margin: 4px 0;
+    padding: 8px;
+    color: #fff;
+    box-shadow: var(--mou_custom_box_shadow);
+    background: var(--mou_gridiant_background);
+} */
+
+/* .mou_btn i {
+    font-size: 1.5rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 5%;
+} */
+.cat_channels {
+    display: none;
+}
+
+
+.channels_cats_btns {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 300px));
+    grid-template-rows: 1fr;
+    grid-gap: 10px;
+    padding: 4px 0;
+    justify-content: center;
+}
+
+.server_btn {
+    display: flex;
+    align-items: stretch;
+    padding: 0.5rem;
+    border-radius: 100px;
+    box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
+    background: rgb(var(--mou_background));
+}
+
+.server_icon_container {
+    flex-grow: 1;
+    font-size: 1.2rem;
+    margin: 0.5rem;
+}
+
+.server_text {
+    flex-grow: 9;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+/* .channels_categories_btns,
+.categori_channels {
+    padding: 0 8px;
+} */
+
+
+.load_more_btn {
+    background: #0000;
+    background-image: var(--bs-gradient) !important;
+    padding: 4px;
+    width: 100%;
+    box-shadow: var(--mou_custom_box_shadow);
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELPlayer</title>
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; media-src * data: blob:; worker-src blob:;">
+    <link rel="stylesheet" href="plyr.css">
+    <link rel="stylesheet" href="mou_plyr.css">
+    <link rel="stylesheet" href="plyr.css" />
+
+</head>
+
+<body>
+
+    <div id="loading-screen" class="d-none">Loading...</div>
+
+    <!-- <video id="videoPlayer" controls></video> -->
+    <div id="player"></div>
+    <audio id="external-audio" preload="auto">
+        <source type="audio/mpeg">
+    </audio>
+
+    <div id="player-container" class="d-none">
+        <video id="plyr" playsinline controls></video>
+    </div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.5/shaka-player.compiled.js"></script>
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="hls.js"></script>
+    <!-- <script src="plyr.js"></script> -->
+    <script src="Clappr/clappr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.5/shaka-player.compiled.js"></script>
+
+    <script src="Clappr/dash-shaka-playback.js"></script>
+    <script src="Clappr/level-selector.min.js"></script>
+    <script src="Clappr/clappr-ima-plugin.min.js"></script>
+    <script src="plyr.polyfilled.js"></script>
+
+
+    <script src="continue-watching.plugin.js"></script>
+
+    <script src="mou_plyr.js"></script>
+</body>
+
+</html>

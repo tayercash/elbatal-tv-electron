@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies Servers </title>
+    <link rel="stylesheet" href="files/fonts/noto-sans-arabic/font.css">
+    <link rel="stylesheet" href="files/fonts/font-awesome/css/all.min.css">
+    <link rel="stylesheet" href="files/css/navigation.css">
+    <link rel="stylesheet" href="files/css/main.css">
+    <link rel="stylesheet" href="files/css/index.css">
+    <link rel="stylesheet" href="files/css/popup.css">
+    <link rel="stylesheet" href="files/css/movies.css">
+</head>
+
+<body>
+    <div class="mou_background"></div>
+
+    <div class="preloader">
+        <div class="posts_ul"></div>
+    </div>
+
+    <div class="header">
+        <div class="header_container">
+            <a class="logo_container">
+                <img src="files/images/logo.png">
+                <span class="website_name_container"> - <span class="website_name"></span>
+            </a>
+            <div class="header_actions" id="header_actions">
+                <button class="mou_btn mou_action_btn" id="open_cats_pop">
+                    <span class="icon"><i class="fal fa-table"></i></span>
+                    <span class="text">التصنيفات</span>
+                </button>
+
+                <button class="mou_btn mou_action_btn" id="search_in_aflam" style="display: none;">
+                    <span class="icon"><i class="fas fa-search"></i></span>
+                    <span class="text">البحث</span>
+                </button>
+
+                <button class="mou_btn mou_action_btn close_iframe_btn" data-close_id="servers_frame">
+                    <span class="icon"><i class="far fa-long-arrow-left"></i></span>
+                    <span class="text">الرجوع</span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="domain_checker_container d-none">
+        <button class="close_video_btn"><i class="far fa-long-arrow-left"></i></button>
+        <div class="domain_checker">
+            <span>
+                <i class="fas fa-circle-notch fa-spin"></i> جاري الاتصال بسيرفر
+                <span class="server_name"></span>
+            </span>
+        </div>
+    </div>
+
+    <div class="mou_popup" id="aflam_search">
+        <div class="mou_popup_container mou_box_shadow">
+            <div class="mou_popup_header">
+                <span class="mou_pop_up_title">البحث</span>
+            </div>
+            <div class="mou_popup_body">
+
+                <div class="mou_input_container prepend mou_box_shadow">
+                    <div class="prepend_input"><span>كلمة البحث</span></div>
+                    <input class="rtl input placertl aflam_search_key" type="text">
+                </div>
+
+            </div>
+            <div class="mou_popup_footer flex_between">
+                <button class="mou_btn mou_box_shadow" data-dismisspopup="true">الرجوع</button>
+                <button class="mou_btn mou_box_shadow" id="submit_search_in_aflam">البحث</button>
+            </div>
+        </div>
+    </div>
+    <div class="mou_popup mou_bottom_pop" id="cats_pop">
+        <div class="mou_popup_container mou_box_shadow">
+            <div class="mou_popup_header">
+                <span class="mou_pop_up_title">التصنيفات</span>
+                <span class="close_popup_btn" data-dismisspopup><i class="far fa-times fa-lg"></i></span>
+            </div>
+            <div class="mou_popup_body full_cats_pop_body">
+                <div class="full_cats_container">
+                    <div class="cats_container" id="custom_selectors"></div>
+                    <hr />
+                    <div class="cats_container" id="cats_container"></div>
+                </div>
+
+            </div>
+            <!-- <div class="mou_popup_footer flex_between">
+                <button class="mou_btn mou_box_shadow" data-dismisspopup="true">الرجوع</button>
+            </div> -->
+        </div>
+    </div>
+
+    <div class="mou_popup mou_bottom_pop" id="watch_popup">
+        <div class="mou_popup_container mou_box_shadow">
+            <div class="mou_popup_header">
+                <span class="mou_pop_up_title">مصادر المشاهدة <span class="loading_watch_srces"><i
+                            class="fas fa-circle-notch fa-spin"></i> جاري
+                        التحميل</span></span>
+                <span class="close_popup" data-closepopup="watch_popup"></span>
+            </div>
+            <div class="mou_popup_body">
+                <div class="watch_srces_btns"> </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mou_popup mou_bottom_pop" id="dl_popup">
+        <div class="mou_popup_container mou_box_shadow">
+            <div class="mou_popup_header">
+                <span class="mou_pop_up_title">مصادر التحميل <span class="loading_watch_srces"><i
+                            class="fas fa-circle-notch fa-spin"></i> جاري
+                        التحميل</span></span>
+                <span class="close_popup" data-closepopup="dl_popup"></span>
+            </div>
+            <div class="mou_popup_body">
+                <div class="dl_srces_btns">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mou_popup mou_bottom_pop" id="notify_popup">
+        <div class="mou_popup_container mou_box_shadow">
+            <div class="mou_popup_header">
+                <span class="mou_pop_up_title">ارسال اشعار للمستخدمين</span>
+                <span class="close_popup" data-closepopup="dl_popup"></span>
+            </div>
+            <div class="mou_popup_body">
+
+                <canvas id="canvasElement"></canvas>
+
+
+                <div class="mou_input_container prepend mou_box_shadow">
+                    <div class="prepend_input"><span>العنوان</span></div>
+                    <input class="rtl input placertl" id="notify_title" type="text" autocomplete="off">
+                </div>
+                <div class="mou_input_container prepend mou_box_shadow">
+                    <div class="prepend_input"><span>الوصف</span></div>
+                    <input class="rtl input placertl" id="notify_body" type="text" autocomplete="off">
+                </div>
+
+                <div class="switch_container">
+                    <label for="send_notify_with_img">ارسال اشعار مع الصورة : </label>
+                    <label for="send_notify_with_img" class="switch">
+                        <input id="send_notify_with_img" type="checkbox" checked="checked">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <div class="notify_select_container">
+                    تحديد ارسال الاشعارات الي متابعين الاشعارات الاتيه :
+                    <div class="notify_select"></div>
+                </div>
+
+                <input type="hidden" id="verify_notify" value="false">
+
+                <div class="alerts">
+                    <div class="mou_alert d-none" id="verify_alert">
+                        <div class="mou_alert-icon"><i class="far fa-exclamation-circle"></i></div>
+                        <div class="mou_alert-message">تم ارسال هذا الإشعار من قبل . هل انت متأكد من اعادة الإرسال</div>
+                    </div>
+                </div>
+            </div>
+            <div class="mou_popup_footer flex_between">
+                <button class="mou_btn mou_box_shadow" data-dismisspopup="true">الرجوع</button>
+                <button class="mou_btn mou_box_shadow" id="submit_notify">ارسال</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="server_content" style="display: none;">
+        <div class="posts_ul_container">
+            <div class="posts_ul" id="posts_ul">
+            </div>
+            <button class="load_more_btn" id="load_more_posts_btn">تحميل المزيد</button>
+        </div>
+    </div>
+
+    <div class="post_content" style="display: none;"></div>
+
+    <script src="files/js/jquery.min.js"></script>
+    <script src="files/js/jqeury.mouagax.js"></script>
+    <script src="files/js/popup.js"></script>
+    <script src="files/js/navigation.js"></script>
+    <script src="files/js/settings.js"></script>
+    <script src="files/js/main.js"></script>
+    <script src="files/js/mouscripts.js"></script>
+    <script src="files/js/index.js"></script>
+    <script>
+        mou_aflam_servers_array = {};
+    </script>
+    <script src="files/js/movies/akowam.js"></script>
+    <script src="files/js/movies/arabseed.js"></script>
+    <script src="files/js/movies/fasel-hd.js"></script>
+    <script src="files/js/movies/cimanow.js"></script>
+    <script src="files/js/movies/asia2tv.js"></script>
+    <script src="files/js/movies/topcinema.js"></script>
+    <!-- <script src="files/js/movies/cima4u.js"></script> -->
+    <script src="files/js/movies/wecima.js"></script>
+    <script src="files/js/movies/qsteshq.js"></script>
+    <!-- <script src="files/js/movies/arab-lionz.js"></script> -->
+    <!-- <script src="files/js/movies/anime4up.js"></script> -->
+    <script src="files/js/movies/btolat.js"></script>
+    <script src="files/js/movies/tuktukcinma.js"></script>
+    <script src="files/js/movies/egydead.js"></script>
+
+    <script src="files/js/movies.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification</title>
+    <link rel="stylesheet" href="files/fonts/noto-sans-arabic/font.css">
+    <link rel="stylesheet" href="files/fonts/font-awesome/css/all.min.css">
+    <style>
+        *,
+        :before,
+        :after {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--main_background);
+            font-family: 'Noto Sans Arabic', sans-serif;
+            color: #fff;
+        }
+
+        #title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        #body {
+            font-weight: 500;
+        }
+
+        :root {
+            --mdb-body-color: #fff;
+            --main_background: #141414;
+            --mdb-modal-bg: #141414 !important;
+            --elmnt_back: #2b2c2c;
+            --primary-color: #9d2019;
+        }
+    </style>
+</head>
+
+<body>
+    <h3 id="title"></h3>
+    <p id="body"></p>
+    <script>
+        let notificationObj = {};
+        document.body.onclick = () => {
+            let targetUrl = notificationObj.url;
+            if (notificationObj.open_url_where == "browser") {
+                electron.openExternalLink(targetUrl);
+            } else if (notificationObj.open_url_where == "app") {
+                electron.openInternalLink(targetUrl);
+            }
+            window.close();
+        };
+
+        let timeout;
+        function startTimeout() {
+            timeout = setTimeout(() => {
+                window.close();
+                ipcRenderer.send('notification-closed');
+            }, 5000);
+        }
+        document.body.onmouseover = () => clearTimeout(timeout);
+        document.body.onmouseout = startTimeout;
+
+        // Receive title, body, and URL data from main process
+        ipcRenderer.on('set-notification-data', (this_notificationObj) => {
+            this_notificationObj = JSON.parse(this_notificationObj);
+            document.getElementById('title').innerText = this_notificationObj.title;
+            document.getElementById('body').innerText = this_notificationObj.body;
+            notificationObj = this_notificationObj;
+            document.body.setAttribute('data-url', url);
+            startTimeout();
+        });
+
+    </script>
+</body>
+
+</html>

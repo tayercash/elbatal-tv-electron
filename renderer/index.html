@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elbatal TV - تطبيق البطل</title>
+    <link rel="stylesheet" href="files/fonts/noto-sans-arabic/font.css">
+    <link rel="stylesheet" href="files/fonts/font-awesome/css/all.min.css">
+    <link rel="stylesheet" href="files/css/homepagedl.css">
+    <link rel="stylesheet" href="files/css/toastify.css">
+</head>
+
+<body>
+    <div class="mou_bg"></div>
+
+    <div class="full_logo">
+        <div class="logo_container">
+            <img src="files/images/logo.png">
+            <div class="title_container">
+                <div class="title">البطل</div>
+                <div class="desc">متعة وسهولة المشاهدة</div>
+            </div>
+        </div>
+        <div class="user_log_stats"><a class="text"> <i class="fas fa-circle-notch fa-spin"></i> جاري تسجيل الدخول</a>
+        </div>
+    </div>
+
+    <div class="full_code_container">
+        <div class="code_container">
+            <div class="code_text"><i class="fas fa-key"></i> ادخل كود التفعيل</div>
+            <div class="code" id="user_code">
+                <input type="number" maxlength="1" min="0" max="9" id="otp1">
+                <input type="number" maxlength="1" min="0" max="9" id="otp2">
+                <input type="number" maxlength="1" min="0" max="9" id="otp3">
+                <input type="number" maxlength="1" min="0" max="9" id="otp4">
+                <input type="number" maxlength="1" min="0" max="9" id="otp5">
+                <input type="number" maxlength="1" min="0" max="9" id="otp6">
+            </div>
+            <button class="mou_btn active_with_code" id="active_with_code">تفعيل</button>
+            <div class="half">
+                <button class="mou_btn" id="get_my_activation_code"><i class="far fa-external-link"></i> احضار كود
+                    التفعيل</button>
+                <button class="mou_btn" id="paste_active_code"><i class="far fa-paste"></i> لصق الكود</button>
+                <button class="mou_btn" id="how_to_get_code"><i class="fal fa-play-circle"></i> كيفية احضار
+                    الكود</button>
+                <button class="mou_btn" id="log_out"><i class="fas fa-sign-out"></i> تسجيل الخروج</button>
+            </div>
+            <hr>
+            <p>المعرف الخاص بحسابك هو <span id="user_id_want_active"></span></p>
+        </div>
+
+    </div>
+
+    <div class="mou_login">
+        <div class="mou_login_full_container">
+
+            <div class="mou_login_container" id="mou_login_container" data-what="sign_in">
+
+                <div class="logo_container">
+                    <img src="files/images/logo.png">
+                    <div class="title_container">
+                        <div class="title">البطل</div>
+                        <div class="desc">متعة وسهولة المشاهدة</div>
+                    </div>
+                </div>
+
+                <form class="signin_without_account_form" id="signin_without_account_form" autocomplete="off">
+
+                    <div class="mou_input_container prepend mou_box_shadow">
+                        <div class="prepend_input"><span>اسمك</span></div>
+                        <input class="input placertl" type="text" id="gust_username" name="gust_username"
+                            autocomplete="off">
+                    </div>
+
+                    <button type="submit" class="mou_watch_btn" id="sign_in_without_account"><i
+                            class="fas fa-sign-in"></i> تسجيل
+                        الدخول </button>
+                </form>
+
+                <form class="signinform" id="signinform" autocomplete="off">
+
+
+                    <div class="mou_input_container prepend mou_box_shadow">
+                        <div class="prepend_input"><span>الأيميل او المعرف</span></div>
+                        <input class="input placertl" type="text" id="in_username" name="in_username"
+                            autocomplete="off">
+                    </div>
+
+                    <div class="mou_input_container prepend mou_box_shadow">
+                        <div class="prepend_input"><span>كلمة المرور</span></div>
+                        <input class="input placertl" type="password" id="in_password" name="in_password"
+                            autocomplete="off">
+                    </div>
+
+                    <button type="submit" class="mou_watch_btn" id="sign_in"><i class="fas fa-sign-in"></i> تسجيل
+                        الدخول </button>
+                </form>
+
+                <form class="signupform" id="signupform" autocomplete="off">
+
+                    <div class="mou_input_container prepend mou_box_shadow">
+                        <div class="prepend_input"><span>اسم المستخدم</span></div>
+                        <input class="input placertl" type="text" id="up_username" name="up_username"
+                            autocomplete="off">
+                    </div>
+
+                    <div class="mou_input_container prepend mou_box_shadow">
+                        <div class="prepend_input"><span>الإيميل</span></div>
+                        <input class="input placertl" type="text" id="up_email" name="up_email" autocomplete="off">
+                    </div>
+
+                    <div class="mou_input_container prepend mou_box_shadow">
+                        <div class="prepend_input"><span>كلمة المرور</span></div>
+                        <input class="input placertl" type="password" id="up_password" name="up_password"
+                            autocomplete="off">
+                    </div>
+
+                    <div class="mou_input_container prepend mou_box_shadow">
+                        <div class="prepend_input"><span>تاكيد كلمة المرور</span></div>
+                        <input class="input placertl" type="password" id="up_repassword" name="up_repassword"
+                            autocomplete="off">
+                    </div>
+
+                    <button type="submit" class="mou_watch_btn" id="sign_up"><i class="fas fa-sign-in"></i> تسجيل
+                        حساب جديد </button>
+
+                </form>
+
+                <form class="forget_password" id="forget_password" autocomplete="off">
+
+                    <div id="forget_password_elmnts">
+
+                        <div class="mou_input_container prepend mou_box_shadow">
+                            <div class="prepend_input"><span>الإيميل</span></div>
+                            <input class="input placertl" type="text" id="forgeted_email" name="forgeted_email"
+                                autocomplete="off" placeholder="ادخل الايميل المطلوب استعادته">
+                        </div>
+
+
+                        <button type="submit" class="mou_watch_btn" id="send_confirm_forget"><i
+                                class="fas fa-paper-plane"></i> استعادة كلمة المرور</button>
+                    </div>
+
+
+                    <div class="mou_alert mou_success forget_password_sent_alert forget_password_alert">
+                        <div class="mou_alert-icon"><i class="far fa-check"></i></div>
+                        <div class="mou_alert-message"></div>
+                    </div>
+
+                    <div class="mou_alert mou_danger can_send_forget_timer_alert forget_password_alert">
+                        <div class="mou_alert-icon"><i class="far fa-exclamation-circle"></i></div>
+                        <div class="mou_alert-message"><a>قمت بارسال ايميل لاستعادة كلمة المرور بالفعل<br>يمكنك الارسال
+                                مره اخري بعد <span class="can_send_forget_timer_after"></span></a></div>
+                    </div>
+
+                    <div class="center"><a href="javascript:void(0)" class="go_for_login">تسجيل الدخول</a>
+                    </div>
+
+                </form>
+
+
+
+                <button class="mou_watch_btn" id="login_with_google"><i class="fab fa-google"></i> تسجيل
+                    الدخول بجوجل</button>
+
+                <div class="links">
+                    <div class="noaccount">ليس لديك حساب ؟ <a href="javascript:void(0)" id="go_for_signup">انشاء حساب
+                            جديد</a></div>
+
+                    <div class="noaccount">نسيت كلمة المرور ؟ <a href="javascript:void(0)"
+                            id="go_for_passowrd_forget">استعادة</a></div>
+
+                    <div class="have_account go_for_login">لدي حساب . <a href="javascript:void(0)">تسجيل الدخول</a>
+                    </div>
+                    <!-- 
+                    <div class="login_without_account"><a href="javascript:void(0)" id="login_without_account">الدخول
+                            كضيف</a></div> -->
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <script src="files/js/jquery.min.js"></script>
+    <script src="files/js/jquery.validate.min.js"></script>
+    <script src="files/js/toastify.js"></script>
+    <script src="files/js/homepagedl.js"></script>
+
+</body>
+
+</html>

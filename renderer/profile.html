@@ -1,0 +1,303 @@
+<link rel="stylesheet" href="files/css/profile.css">
+
+<div class="mou_popup" id="user_data_editor">
+    <div class="mou_popup_container mou_box_shadow">
+        <div class="mou_popup_body">
+            <div class="editor_profile_img_container">
+                <div class="profile_image" id="editor_profile_avatar" data-avatar_code="">
+
+                </div>
+                <div class="img_container" id="editor_profile_g_icon">
+                    <img src="">
+                </div>
+
+                <div class="edit_avatar_btn">
+                    <i class="fal fa-edit"></i>
+                </div>
+            </div>
+
+            <div class="mou_avatars_selector_container">
+                <div class="mou_avatars">
+
+
+                </div>
+            </div>
+
+            <div class="mou_input_container prepend mou_box_shadow">
+                <div class="prepend_input"><span>اسم المستخدم</span></div>
+                <input class="rtl input placertl" id="editor_user_name" type="text">
+            </div>
+            <div class="mou_input_container prepend mou_box_shadow">
+                <div class="prepend_input"><span>البريد الالكتروني</span></div>
+                <input class="rtl input placertl" id="editor_user_email" type="text" disabled>
+            </div>
+            <div class="mou_input_container prepend mou_box_shadow">
+                <div class="prepend_input"><span>المعرف</span></div>
+                <input class="rtl input placertl" id="editor_user_id" type="text" disabled>
+            </div>
+
+        </div>
+        <div class="mou_popup_footer flex_between">
+            <button class="mou_btn mou_box_shadow" data-dismisspopup="true">الرجوع</button>
+            <button class="mou_btn mou_box_shadow" id="save_user_data">حفظ</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="mou_popup purchase_meth_popup" id="paypal">
+    <div class="mou_popup_container mou_box_shadow">
+        <div class="mou_popup_header">
+            <span class="mou_pop_up_title">الدفع من خلال الباي بال - <span class="donation_val"></span></span>
+        </div>
+        <div class="mou_popup_body">
+            <div class="mou_alert">
+                <div class="mou_alert-icon"><i class="far fa-exclamation-circle"></i></div>
+                <div class="mou_alert-message">قم بتأكيد الدفع بعد اتمام عملية التحويل</div>
+            </div>
+
+            <h3>معلومات الدفع :</h3>
+            <p>
+                <a>رسوم الباي بال : <span class="paypal_fees"></span></a>
+                <a>القيمة المطلوب تحويلها : <span class="pounds_will_send"></span></a>
+                <a>حساب التحويل : <span class="d-none" id="paypal_email_for_send"></span><span id="paypalme"><img
+                            class="icon" src="files/images/sub/pp.png">الذهاب للدفع</span></a>
+            </p>
+
+            <div class="mou_input_container prepend mou_box_shadow">
+                <div class="prepend_input"><span>حساب باي بال المرسل منه</span></div>
+                <input class="ltr input placertl" id="paypal_sender_email" type="email" autocomplete="off">
+            </div>
+
+        </div>
+        <div class="mou_popup_footer flex_between">
+            <button class="mou_btn mou_box_shadow" data-dismisspopup="true">الرجوع</button>
+            <button class="mou_btn mou_box_shadow" id="submit_paypal">تأكيد الدفع</button>
+        </div>
+    </div>
+</div>
+
+<div class="mou_popup purchase_meth_popup" id="vf_cash">
+    <div class="mou_popup_container mou_box_shadow">
+        <div class="mou_popup_header">
+            <span class="mou_pop_up_title">الدفع من خلال فودافون كاش - <span class="donation_val"></span></span>
+        </div>
+        <div class="mou_popup_body">
+            <div class="mou_alert">
+                <div class="mou_alert-icon"><i class="far fa-exclamation-circle"></i></div>
+                <div class="mou_alert-message">قم بتأكيد الدفع بعد اتمام عملية التحويل</div>
+            </div>
+
+            <h3>معلومات الدفع :</h3>
+            <p>
+                <a>الرقم الي هتحول عليه : <span id="vodafone_num_for_send"></span></a>
+                <a>قيمة الدولار بالجنية المصري : <span class="dollar_to_pound"></span></a>
+                <a>القيمة المطلوب تحويلها بالجنية المصري : <span class="pounds_will_send"></span></a>
+            </p>
+
+            <div class="mou_input_container prepend mou_box_shadow">
+                <div class="prepend_input"><span>الرقم الذي ارسلت منه</span></div>
+                <input class="ltr input placertl" id="vodafone_sender_number" type="number" autocomplete="off">
+            </div>
+
+        </div>
+        <div class="mou_popup_footer flex_between">
+            <button class="mou_btn mou_box_shadow" data-dismisspopup="true">الرجوع</button>
+            <button class="mou_btn mou_box_shadow" id="submit_vodafone_cash">تأكيد الدفع</button>
+        </div>
+    </div>
+</div>
+
+<div class="mou_popup purchase_meth_popup" id="Etislat_cash">
+    <div class="mou_popup_container mou_box_shadow">
+        <div class="mou_popup_header">
+            <span class="mou_pop_up_title">اتصالات كاش - <span class="donation_val"></span></span>
+        </div>
+        <div class="mou_popup_body">
+
+            <div class="mou_alert">
+                <div class="mou_alert-icon"><i class="far fa-exclamation-circle"></i></div>
+                <div class="mou_alert-message">قم بتأكيد الدفع بعد اتمام عملية التحويل</div>
+            </div>
+
+            <h3>معلومات الدفع :</h3>
+            <p>
+                <a>الرقم الي هتحول عليه : <span id="etislat_num_for_send"></span></a>
+                <a>قيمة الدولار بالجنية المصري : <span class="dollar_to_pound"></span></a>
+                <a>القيمة المطلوب تحويلها بالجنية المصري : <span class="pounds_will_send"></span></a>
+            </p>
+
+            <div class="mou_input_container prepend mou_box_shadow">
+                <div class="prepend_input"><span>الرقم الذي ارسلت منه</span></div>
+                <input class="ltr input placertl" id="Etislat_sender_number" type="number" autocomplete="off">
+            </div>
+
+        </div>
+        <div class="mou_popup_footer flex_between">
+            <button class="mou_btn mou_box_shadow" data-dismisspopup="true">الرجوع</button>
+            <button class="mou_btn mou_box_shadow" id="submit_etislat_cash">تأكيد الدفع</button>
+        </div>
+    </div>
+</div>
+
+<div class="mou_popup" id="select_purchase_meth_popup">
+    <div class="mou_popup_container mou_box_shadow">
+        <div class="mou_popup_header">
+            <span class="mou_pop_up_title">اختيار وسيلة الدفع - <span class="donation_val"></span></span>
+        </div>
+        <div class="mou_popup_body">
+
+            <div class="posts_ul" id="donations_meth_list">
+
+                <button class="sub_card select_purchase" data-meth="paypal">
+                    <span class="vide_thump"></span>
+                    <div class="sub_container">
+                        <div class="sub_icon">
+                            <img class="sub_img" src="files/images/sub/paypal.png" alt="">
+                        </div>
+                        <div class="sub_title">PayPal</div>
+                    </div>
+                </button>
+
+                <button class="sub_card select_purchase" data-meth="usdt">
+                    <span class="vide_thump"></span>
+                    <div class="sub_container">
+                        <div class="sub_icon">
+                            <img class="sub_img" src="files/images/sub/usdt.png" alt="">
+                        </div>
+                        <div class="sub_title">USDT</div>
+                    </div>
+                </button>
+<!-- 
+                <button class="sub_card select_purchase d-none" data-meth="vf_cash">
+                    <span class="vide_thump"></span>
+                    <div class="sub_container">
+                        <div class="sub_icon">
+                            <img class="sub_img" src="files/images/sub/vf-cash.png" alt="">
+                        </div>
+                        <div class="sub_title">فودافون كاش</div>
+                    </div>
+                </button> -->
+
+                <!-- <button class="sub_card select_purchase d-none" data-meth="Etislat_cash">
+                    <span class="vide_thump"></span>
+                    <div class="sub_container">
+                        <div class="sub_icon">
+                            <img class="sub_img" src="files/images/sub/etislat-cash.png" alt="">
+                        </div>
+                        <div class="sub_title">اتصالات كاش</div>
+                    </div>
+                </button> -->
+
+            </div>
+
+        </div>
+        <div class="mou_popup_footer flex_between">
+            <button class="mou_btn mou_box_shadow" data-dismisspopup="true">الرجوع</button>
+        </div>
+    </div>
+</div>
+
+<div class="main">
+
+
+    <div class="full_profile" id="profile_container">
+        <div class="profile_contanier">
+
+            <div class="profile_img_container">
+                <div class="profile_image" id="profile_avatar"></div>
+                <div class="img_container" id="profile_g_ico">
+                    <img src="">
+                </div>
+            </div>
+
+            <div class="profile_data">
+
+                <div class="info">
+                    <a><span id="user_name"></span><span id="user_id_container">#<span id="user_id"></span></span></a>
+
+                    <!-- <a id="user_pro_stats" data-is_pro="false">FREE</a> -->
+                </div>
+                <div class="user_state pro_div">
+                    <a>Premium</a>
+                    <a>حتي : <span id="pro_to_date"></span></a>
+                </div>
+                <div class="user_state active_with_code_div">
+                    <a>Code Activated</a>
+                    <a><span id="active_with_code_until"></span></a>
+                </div>
+
+                <a class="mou_btn profile_btn distributor_btn" onclick="open_distributors()">
+                    <i class="fal fa-users"></i>
+                    <span class="btn_text">لوحة توزيع الإشتراكات</span>
+                </a>
+
+                <a class="mou_btn profile_btn" onclick="open_settings()">
+                    <i class="fal fa-cog"></i>
+                    <span class="btn_text">الإعدادات</span>
+                </a>
+                <a class="mou_btn profile_btn" id="edit_user_data">
+                    <i class="far fa-user"></i>
+                    <span class="btn_text">تعديل بيانات الحساب</span>
+                </a>
+                <a class="mou_btn profile_btn" onclick="open_My_devices()">
+                    <i class="fas fa-phone-laptop"></i>
+                    <span class="btn_text">أجهزتي</span>
+                </a>
+                <a class="mou_btn profile_btn" id="sub_btn" disabled>
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span class="btn_text" id="subscribe_pro">الإشتراك وحذف الاعلانات</span>
+                </a>
+                <a class="mou_btn profile_btn code_activation" disabled>
+                    <i class="fas fa-key"></i>
+                    <span class="btn_text">حذف الإعلانات بكود تفعيل</span>
+                </a>
+                <a class="mou_btn profile_btn" onclick="open_app_info()">
+                    <i class="far fa-info-circle"></i>
+                    <span class="btn_text">معلومات عن البرنامج</span>
+                </a>
+                <a class="mou_btn profile_btn" id="logout_from_elbatal">
+                    <i class="far fa-sign-out"></i>
+                    <span class="btn_text">تسجيل الخروج</span>
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div id="subscription_container">
+
+        <div class="header_container">
+            <span class="header_title">الاشتراك وحذف الاعلانات</span>
+        </div>
+
+        <!-- <div class="mou_alert">
+            <div class="mou_alert-icon"><i class="far fa-exclamation-circle"></i></div>
+            <div class="mou_alert-message">دعمك بأي قيمة من القيم الاتيه سيتم حذف الاعلانات من التطبيق لحسابك لمدة عام
+            </div>
+        </div> -->
+
+        <div class="mou_alert mou_success loader_packs">
+            <div class="mou_alert-icon"><i class="fas fa-circle-notch fa-spin"></i></div>
+            <div class="mou_alert-message">جاري التحميل</div>
+        </div>
+
+
+        <div class="posts_ul" id="pro_packs_list">
+            <!-- <div class="sub_card select_value" data-val="5">
+                <span class="vide_thump"></span>
+                <div class="sub_container">
+                    <div class="sub_icon">
+                        <img class="sub_img" src="../../files/images/sub/Pro.png" alt="">
+                    </div>
+                    <div class="sub_title">5$</div>
+                </div>
+            </div> -->
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="files/js/multiavatar.js"></script>
+<script type="text/javascript" src="files/js/screen.dpi.detector.js"></script>
+<script src="files/js/profile.js"></script>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>avatar</title>
+    <style>
+        *,
+        ::after,
+        ::before {
+            box-sizing: border-box;
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+            background: #0000;
+        }
+
+        #avatar,
+        #avatar svg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="avatar"></div>
+    <script type="text/javascript" src="files/js/multiavatar.js"></script>
+    <script>
+        function getQueryVariable(variable, meth = 1, link = "") {
+            if (meth == 1) {
+                var query = window.location.search.substring(1);
+            } else {
+                var query = link.split("?")[1];
+            }
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == variable) {
+                    return pair[1];
+                }
+            }
+            return (false);
+        }
+        function change_avatar(text = "") {
+            if (text == "") {
+                if (getQueryVariable("text")) {
+                    htmlSVG = multiavatar(getQueryVariable("text"), true);
+                } else {
+                    htmlSVG = multiavatar("بطل", true, { 'part': '07', 'theme': 'B' });
+                }
+            } else {
+                htmlSVG = multiavatar(text);
+            }
+            document.getElementById("avatar").innerHTML = htmlSVG;
+        }
+        change_avatar();
+    </script>
+</body>
+
+</html>

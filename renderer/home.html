@@ -1,0 +1,217 @@
+<link rel="stylesheet" href="files/css/home.css">
+
+<!-- <a href="javascript:mouscripts.open_external_link('https://www.elbatal-app.com/')" class="mou_btn alert"><i
+        class="fas fa-exclamation-triangle yellow"></i> تأكد من تحميل التطبيق من الموقع الرسمي <i
+        class="fas fa-exclamation-triangle yellow"></i></a> -->
+
+<div class="preloader"></div>
+
+<div class="mou_popup" id="full_search_pop">
+    <div class="mou_popup_container mou_box_shadow">
+        <div class="mou_popup_header">
+            <span class="mou_pop_up_title">البحث المتقدم</span>
+        </div>
+        <div class="mou_popup_body">
+
+            <div class="mou_input_container prepend mou_box_shadow">
+                <div class="prepend_input"><span>كلمة البحث</span></div>
+                <input class="rtl input placertl aflam_search_key" type="text">
+            </div>
+
+        </div>
+        <div class="mou_popup_footer flex_between">
+            <button class="mou_btn mou_box_shadow" data-dismisspopup="true">الرجوع</button>
+            <button class="mou_btn mou_box_shadow" id="submit_search_in_aflam">البحث</button>
+        </div>
+    </div>
+</div>
+
+<div class="btns_cont d-none">
+    <button class="mou_btn" id="mp4test">mp4 Test</button>
+    <button class="mou_btn" id="HLSm3u8">M3u8 Test</button>
+    <button class="mou_btn" id="mpdTest">MPD Test</button>
+</div>
+<script>
+    $("#mp4test").click(function () {
+        play_vid("http://192.168.1.13/api/videoserver/mouvideo.mp4", "Test-MP4", "", JSON.stringify({}));
+    });
+    $("#HLSm3u8").click(function () {
+        play_vid("http://192.168.1.13/api/videoserver/video.m3u8", "Test-M3U8", "", JSON.stringify({
+            "User-Agent": "mou_user_agent",
+            "Referer": "mou_referrer"
+        }));
+    });
+    $("#mpdTest").click(function () {
+
+        play_vid("https://ssc-1-enc.edgenextcdn.net/out/v1/c696e4819b55414388a1a487e8a45ca1/index.mpd", "TEST", "", `{}`, "", false, what_window.settings_vars.watching_apk, false, "", "", "clearkey", "5c672f6b85a94638872d0214f7806ed4:bf8756fbb866ee2d5c701c2289dd8de3", "localWebPlayer");
+    });
+</script>
+<div class="home_posts_container">
+
+    <div class="alerts">
+        <div class="mou_alert mou_danger d-none" id="update_elplayer_alert">
+            <div class="mou_alert-icon"><i class="far fa-exclamation-circle"></i></div>
+            <div class="mou_alert-message"></div>
+        </div>
+    </div>
+    <div class="home_posts">
+
+        <a class="home_post" data-open_server="quran_kareem">
+            <div class="home_post_overlay">
+                <div class="item-text"><span class="mou_resize_text" data-textSize="16">القرآن الكريم</span></div>
+            </div>
+            <span class="home_post_thump"
+                style="background:url(files/images/quran.jpg) no-repeat center center;background-size: cover"></span>
+        </a>
+
+        <a class="home_post" data-open_server="akowam">
+            <div class="home_post_overlay">
+                <div class="item-text"><span class="mou_resize_text" data-textSize="20">أكوام</span></div>
+            </div>
+            <span class="home_post_thump"
+                style="background:url(files/images/avangers.jpg) no-repeat center center;background-size: cover"></span>
+        </a>
+        
+        <a class="home_post" data-open_server="CimaNow">
+            <div class="home_post_overlay">
+                <div class="item-text"><span class="mou_resize_text" data-textSize="20">سيما ناو</span></div>
+            </div>
+            <span class="home_post_thump"
+                style="background:url(files/images/joker.jpg) no-repeat center center;background-size: cover"></span>
+        </a>
+
+        <a class="home_post" data-open_server="fasel-hd">
+            <div class="home_post_overlay">
+                <div class="item-text"><span class="mou_resize_text" data-textSize="20">فاصل HD</span></div>
+            </div>
+            <span class="home_post_thump"
+                style="background:url(files/images/godza.jpg) no-repeat center center;background-size: cover"></span>
+        </a>
+
+        <a class="home_post" data-open_server="egydead">
+            <div class="home_post_overlay">
+                <!-- <span class="new_item">جديد</span> -->
+
+                <div class="item-text"><span class="mou_resize_text" data-textSize="20">إيجي ديد</span></div>
+            </div>
+            <span class="home_post_thump"
+                style="background:url(files/images/movie1.png) no-repeat center center;background-size: cover"></span>
+        </a>
+
+        <a class="home_post" data-open_server="tuktukcinma">
+            <div class="home_post_overlay">
+
+                <div class="item-text"><span class="mou_resize_text" data-textSize="20">توك توك سيما</span></div>
+            </div>
+            <span class="home_post_thump"
+                style="background:url(files/images/anim.jpg) no-repeat center center;background-size: cover"></span>
+        </a>
+
+        <a class="home_post" data-open_server="top-cinema">
+            <div class="home_post_overlay">
+                <div class="item-text"><span class="mou_resize_text" data-textSize="20">توب سينما</span></div>
+            </div>
+            <span class="home_post_thump"
+                style="background:url(files/images/test.jpg) no-repeat center center;background-size: cover"></span>
+        </a>
+
+        <a class="home_post" data-open_server="arabseed">
+            <div class="home_post_overlay">
+                <div class="item-text"><span class="mou_resize_text" data-textSize="20">عرب سيد</span></div>
+            </div>
+            <span class="home_post_thump"
+                style="background:url(files/images/venom.jpg) no-repeat center center;background-size: cover"></span>
+        </a>
+
+        <a class="home_post" data-open_server="WeCima">
+            <div class="home_post_overlay">
+                <div class="item-text"><span class="mou_resize_text" data-textSize="20">وي سيما</span></div>
+            </div>
+            <span class="home_post_thump"
+                style="background:url(files/images/joker1.jpg) no-repeat center center;background-size: cover"></span>
+        </a>
+
+
+        <a class="home_post" data-open_server="qsteshq">
+            <div class="home_post_overlay">
+                <!-- <span class="new_item">جديد</span> -->
+                <div class="item-text"><span class="mou_resize_text" data-textSize="20">قصة عشق</span></div>
+            </div>
+            <span class="home_post_thump"
+                style="background:url(files/images/turk.jpg) no-repeat center center;background-size: cover"></span>
+        </a>
+
+        <a class="home_post" data-open_server="asia2tv">
+            <div class="home_post_overlay">
+                <div class="item-text"><span class="mou_resize_text" data-textSize="20">asia2tv</span></div>
+            </div>
+            <span class="home_post_thump"
+                style="background:url(files/images/korean1.jpg) no-repeat center center;background-size: cover"></span>
+        </a>
+
+        <a class="home_post" data-open_server="btolat">
+
+            <div class="home_post_overlay">
+                <div class="item-text"><span class="mou_resize_text" data-textSize="14">فيديو رياضي</span></div>
+            </div>
+            <span class="home_post_thump"
+                style="background:url(files/images/messi.jpeg) no-repeat center center;background-size: cover"></span>
+
+        </a>
+        <a class="home_post" onclick="open_channels()">
+
+            <div class="home_post_overlay">
+                <div class="item-text"><span class="mou_resize_text" data-textSize="14">القنوات التليفيزيونيه</span>
+                </div>
+            </div>
+            <span class="home_post_thump"
+                style="background:url(files/images/tvs.jpg) no-repeat center center;background-size: cover"></span>
+        </a>
+        <a class="home_post" onclick="open_matches_table()">
+            <div class="home_post_overlay">
+                <div class="item-text"><span class="mou_resize_text" data-textSize="14">جدول المباريات</span></div>
+            </div>
+            <span class="home_post_thump"
+                style="background:url(files/images/cr7.png) no-repeat center center;background-size: cover"></span>
+        </a>
+
+
+        <a class="home_post" onclick="open_external_link(`https://t.me/Elbatal_Tv`)">
+            <span class="home_post_thump"
+                style="background:url(files/images/tele.jpg) no-repeat center center;background-size: cover"></span>
+        </a>
+
+    </div>
+</div>
+
+<div id="header_actions">
+    <button class="mou_btn mou_action_btn d-none" id="full_search">
+        <span class="icon"><i class="fas fa-search"></i></span>
+        <span class="text">البحث</span>
+    </button>
+
+</div>
+
+
+
+<!-- <div class="btns_groub">
+    <div class="home_btn mou_box_shadow" id="open_aflam_w_muslslat">
+        <span style="background: url(files/images/cima.png) no-repeat center center;"></span>
+        <em>افلام ومسلسلات</em>
+    </div>
+    <div class="home_btn mou_box_shadow" id="open_gdwal_elmobrayat">
+        <span style="background: url(files/images/football.png) no-repeat center center;"></span>
+        <em>جدول مباريات اليوم</em>
+    </div>
+    <div class="home_btn mou_box_shadow" onclick="load_btolat()">
+        <span style="background: url(files/images/football.png) no-repeat center center;"></span>
+        <em>فيديوهات رياضية</em>
+    </div>
+    <div class="home_btn mou_box_shadow" id="open_channels">
+        <span style="background: url(files/images/cima.png) no-repeat center center;"></span>
+        <em>القنوات المباشرة</em>
+    </div>
+
+</div> -->
+
+<script src="files/js/home.js"></script>

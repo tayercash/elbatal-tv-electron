@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "313300326870",
+    "project_id": "elbatal-tv-global",
+    "storage_bucket": "elbatal-tv-global.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:313300326870:android:23a2509e0022be63132c77",
+        "android_client_info": {
+          "package_name": "com.mouscripts.elbatal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7jRTjsKrwhli8EKFkAGxlCInCPdO9zvI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

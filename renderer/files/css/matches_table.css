@@ -1,0 +1,429 @@
+ul.matches_container {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0 0.5rem;
+}
+
+.liga_info_container {
+    padding: 10px;
+}
+
+.liga_logo_container {
+    position: relative;
+    display: block;
+    float: right;
+    background: #fff;
+    margin-left: 8px;
+    border-radius: 5px;
+    width: 30px;
+    padding: 2px;
+    height: 34px;
+}
+
+.liga_logo {
+    display: block;
+    height: 30px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.no_liga_logo {
+    height: 100%;
+    display: block;
+    background-size: 18px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("files/images/cup.png");
+}
+
+.liga_name {
+    padding: 4px 12px;
+    max-width: max-content;
+    border-radius: 5px;
+    border-right: solid 3px;
+    border-left: solid 3px;
+    background: var(--mou_gridiant_background);
+    margin: 0 auto 8px auto;
+    text-align: center;
+}
+
+.match {
+    position: relative;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background: var(--elmnt_back);
+    /* background: url(../images/soccer.jpg) #000 no-repeat top center; */
+    background-size: 100%;
+    background-position: center;
+    width: 100%;
+
+    transform: none !important;
+}
+
+.match_data {
+    text-align: center;
+    list-style: none;
+}
+
+.match_data>div {
+    display: inline-block;
+    font-size: 0.7rem;
+}
+
+.mou_icon {
+    display: inline-block;
+    width: 1.5em;
+    height: 1.1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+    top: 4px;
+    position: relative;
+}
+
+.match .info {
+    overflow: hidden;
+    /* max-height: 0; */
+    /* height: 100%; */
+    display: none;
+
+}
+
+
+
+.match .info.slideDown {
+    animation: 0.3s ease-in slideDown;
+    animation-fill-mode: forwards;
+}
+
+.match .info.slideUp {
+    animation: 0.3s ease-out slideUp;
+    animation-fill-mode: forwards;
+}
+
+
+
+
+@keyframes slideDown {
+    0% {
+        max-height: 0;
+    }
+
+    100% {
+        max-height: 1000px;
+    }
+}
+
+@keyframes slideUp {
+    0% {
+        max-height: 1000px;
+    }
+
+    100% {
+        max-height: 0;
+    }
+}
+
+.match .info ul {
+    text-align: center;
+    list-style: none;
+
+}
+
+.ch_box {
+    border-radius: 10px;
+    overflow: hidden;
+    display: block;
+    width: max-content;
+    margin: 0 auto;
+    margin-bottom: 8px;
+    background: var(--mou_gridiant_background);
+}
+
+.ch_box .ch_name {
+    display: block;
+    padding: 4px 8px;
+    color: #fff;
+
+}
+
+.ch_box .ch_comentator {
+    display: block;
+    border-top: solid 1px #fff6;
+}
+
+.mou_match {
+    display: grid;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: 3fr 2fr 3fr;
+    position: relative;
+}
+
+
+
+.stad_name {
+    margin: 0 4px;
+}
+
+@property --angle {
+    syntax: '<angle>';
+    initial-value: 90deg;
+    inherits: true;
+}
+
+ul.matches_container .match:before,
+ul.matches_container .match:after {
+    content: '';
+    position: absolute;
+    left: -1.5px;
+    top: -1.5px;
+    width: calc(100% + 3px);
+    height: calc(100% + 3px);
+    z-index: -1;
+    border-radius: 12px;
+    /* background: var(--mou_gridiant_background); */
+}
+
+/* ul.matches_container .match.animation:before,
+ul.matches_container .match.animation:after {
+    --angle: 90deg;
+    background-image: conic-gradient(from var(--angle),
+            var(--c1) 0.1turn,
+            var(--c1) 0.3turn,
+            var(--c2) 0.5turn);
+    animation: borderRotate 2.5s linear infinite forwards;
+} */
+
+
+/* ul.matches_container .match.Nearstart:before,
+ul.matches_container .match.Nearstart:after {
+    --c1: rgb(223, 207, 37);
+    --c2: rgba(255, 237, 71, 0.1);
+} */
+
+/* ul.matches_container .match.live:before,
+ul.matches_container .match.live:after {
+    --c1: rgb(255, 71, 71);
+    --c2: rgba(255, 71, 71, 0.1);
+} */
+
+/* ul.matches_container .match.betmatch:before,
+ul.matches_container .match.betmatch:after {
+    --c1: #030ac9;
+    --c2: rgba(168, 239, 255, 0.1);
+} */
+
+
+@keyframes borderRotate {
+    100% {
+        --angle: 450deg;
+    }
+}
+
+
+.mou_match:hover {
+    /* background: #151515; */
+}
+
+
+.mou_match .team {
+    display: flex;
+    align-items: center;
+    padding: 14px 0;
+    overflow: hidden;
+}
+
+.mou_match .team_1 {
+    flex-direction: row-reverse;
+}
+
+.mou_match .team .team_logo {
+    margin: 0 18px;
+    width: 65px;
+    height: 65px;
+}
+
+.mou_match .team .team_name {
+    text-align: center;
+    width: -webkit-fill-available;
+    overflow: auto;
+}
+
+
+.mou_match .team .team_name::-webkit-scrollbar {
+    display: none;
+    /* Safari and Chrome */
+}
+
+.mou_match .team .team_name span {
+    width: max-content;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.mou_match .team_1 .team_name span {
+    float: left;
+}
+
+.match_center {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: 1fr auto 1fr;
+}
+
+.team_score {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.match_start_in {
+    text-align: center;
+    /* font-size: 1rem; */
+}
+
+.countdown {
+    margin-bottom: 1rem;
+}
+
+.countdown_timer {
+    color: #fff;
+}
+
+.countdown_timer .title {
+    line-height: 1;
+    margin-bottom: 1rem;
+}
+
+.countdown_timer>div {
+    display: inline-block;
+    margin: 0 4px;
+    padding: 10px;
+    background: #85858524;
+    border-radius: 3px;
+    /* background: var(--mou_gridiant_background); */
+
+}
+
+.countdown_timer div .count {
+    display: inline-block;
+    padding: 6px 8px;
+    /* background: var(--mou_gridiant_background); */
+    background: #0000007a;
+    font-family: sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1;
+    border-radius: 3px;
+}
+
+.countdown_timer .title {
+    padding-top: 10px;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.time_center {
+    text-align: center;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.mou_match_status {
+    display: none;
+    background: var(--main_background);
+    padding: 2px 10px;
+    border-radius: 20px;
+}
+
+.match.live .mou_match_status {
+    display: block;
+    background: rgb(255, 71, 71);
+}
+
+.match.Nearstart .mou_match_status {
+    display: block;
+    background: rgb(223, 207, 37);
+}
+
+.match.match_ended .mou_match_status {
+    display: block;
+    background: rgb(77, 77, 77);
+}
+
+.match.betmatch .mou_match_status {
+    display: block;
+    background: #030ac9;
+}
+
+
+
+.full_match_container {
+    display: none;
+}
+
+.match_container .match {
+    padding-top: 20px;
+}
+
+.match_container .match .info {
+    display: block;
+}
+
+.match_container .mou_match .team {
+    flex-direction: column;
+}
+
+
+.match_container .mou_match .team_name span {
+    float: unset !important;
+    margin: 0 auto;
+    /* font-size: 1.1rem; */
+    font-weight: 600;
+}
+
+.match_container .mou_match .team .team_name {
+    margin-top: 4px;
+}
+
+@media (max-width: 660px) {
+    .mou_match {
+        grid-template-columns: 1fr 2fr 1fr;
+    }
+
+    .mou_match .team {
+        flex-direction: column;
+    }
+
+    .team_name .loader_content {
+        margin-top: 11px;
+    }
+
+    .mou_match .team .team_logo {
+        width: 30px;
+        height: 30px;
+    }
+
+    .mou_match .team .team_name {
+        font-size: 0.8rem;
+    }
+
+    .mou_match .team .team_name span {
+        margin: 0 auto;
+    }
+
+    .mou_match .team_1 .team_name span {
+        float: unset;
+    }
+
+    .team_score {
+        font-size: 1.2rem;
+    }
+}
