@@ -107,7 +107,8 @@ const childWindowWebContentsHeaders = {};
 const isMac = process.platform === 'darwin';
 const idmPath = path.join("C:\\Program Files (x86)\\Internet Download Manager", "IDMan.exe");
 
-let OpenerURL = path.join(__dirname, '/renderer/index1.html');
+const ONLINE_APP_URL = "https://new.elbatal-app.com/app";
+let OpenerURL = ONLINE_APP_URL;
 let mainWindow;
 let aboutWindow;
 let loginWindow;
@@ -444,7 +445,8 @@ function createMainWindow() {
       nodeIntegration: true,
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.js'),
-      webSecurity: true, // <---- disables mixed content / HTTPS upgrade
+      webSecurity: false, // <---- CORS bypass (بيسمح بطلبات cross-origin زي الأندرويد)
+      allowRunningInsecureContent: true, // بيسمح بمحتوى HTTP داخل الصفحة HTTPS (mixed content)
       // تفعيل تسريع الرسوميات لضمان سلاسة العرض
       offscreen: false,
       // التأكد من أن الصور والنصوص لا تفقد حدتها عند التكبير
@@ -719,7 +721,7 @@ function startExpressServer() {
           if (isDev) {
             res.sendFile(path.join(__dirname, '/renderer/files/assets/success_login.html'));
           } else {
-            res.sendFile(path.join(app.getPath('userData'), '/nodep/files/assets/success_login.html'));
+            res.send(`<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>تم تسجيل الدخول</title></head><body style="font-family:Arial,sans-serif;background:#0d1117;color:#fff;display:flex;align-items:center;justify-content:center;height:100vh;margin:0"><div style="text-align:center"><h1>✅ تم تسجيل الدخول بنجاح</h1><p>يمكنك الآن العودة إلى التطبيق وإغلاق هذه الصفحة.</p></div></body></html>`);
           }
 
           // res.send('Authentication successful. You can close this window.');
@@ -988,9 +990,7 @@ if (!gotTheLock) {
         const onlyurl = new URL(protocolUrl);
         const queryParams = Object.fromEntries(onlyurl.searchParams.entries());
         const queryString = new URLSearchParams(queryParams).toString();
-        const filePath = path.join(__dirname, '/renderer/index1.html'); // Update with your file path
-        mainWindow.loadURL(`file://${filePath}?${queryString}`);
-        // mainWindow.loadFile(path.join(__dirname, './renderer/index1.html') + "?" + queryString);
+        mainWindow.loadURL(ONLINE_APP_URL + (queryString ? `?${queryString}` : ""));
       }
     }
   });
@@ -1006,8 +1006,7 @@ if (!gotTheLock) {
       const onlyurl = new URL(protocolUrl);
       const queryParams = Object.fromEntries(onlyurl.searchParams.entries());
       const queryString = new URLSearchParams(queryParams).toString();
-      const filePath = path.join(__dirname, '/renderer/index1.html'); // Update with your file path
-      OpenerURL = `file://${filePath}?${queryString}`;
+      OpenerURL = ONLINE_APP_URL + (queryString ? `?${queryString}` : "");
     }
 
     session.defaultSession.setPermissionCheckHandler((webContents, permission, requestingOrigin) => {
@@ -1035,7 +1034,16 @@ if (!gotTheLock) {
           details.requestHeaders[key] = childWindowData[key];
         }
       }
-      // details.requestHeaders['Cache-Control'] = 'no-cache';
+
+      // CORS bypass marker (بيضيفه jqeury.mouagax.js للطلبات cross-origin)
+      // زي الـ native layer في الأندرويد: بنحذفه قبل ما يوصل للسيرفر
+      if (details.requestHeaders["MOuCustomREQUEST"] === "NICE") {
+        delete details.requestHeaders["MOuCustomREQUEST"];
+      }
+
+      // وقف الكاش نهائيا: أي طلب من التطبيق ياخد نسخة جديدة من السيرفر
+      details.requestHeaders['Cache-Control'] = 'no-cache, no-store, must-revalidate, max-age=0';
+      details.requestHeaders['Pragma'] = 'no-cache';
 
 
       // Delete any header that starts with 'sec-'
@@ -1054,6 +1062,13 @@ if (!gotTheLock) {
 
       delete headers["upgrade-insecure-requests"];
       delete headers["Strict-Transport-Security"];
+
+      // CORS bypass: نضيف هيدرات الـ CORS لكل الردود عشان أي طلب cross-origin
+      // من الـ renderer يعدي من غير ما السيرفر يبعتهم (نفس حل الأندرويد)
+      headers["Access-Control-Allow-Origin"] = ["*"];
+      headers["Access-Control-Allow-Headers"] = ["*"];
+      headers["Access-Control-Allow-Methods"] = ["*"];
+      headers["Access-Control-Expose-Headers"] = ["*"];
 
       let plainHeaders = Object.entries(headers)
         .map(([key, value]) => `${key}: ${value.join(", ")}`)
