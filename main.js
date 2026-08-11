@@ -21,6 +21,8 @@ const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 
 const { spawn } = require('child_process');
+const DownloadsManager = require('./downloads-manager');
+let downloadsManager;
 
 // process.env['NODE_ENV'] = 'production';
 
@@ -995,6 +997,14 @@ if (!gotTheLock) {
     }
   });
   app.on('ready', () => {
+
+    // مدير التحميلات المحلي (SQLite + تحميل نيتف بالهيدرز)
+    try {
+      downloadsManager = new DownloadsManager();
+      downloadsManager.init();
+    } catch (e) {
+      console.error('downloads-manager init error:', e);
+    }
 
     // protocol.handle(customScheme, (request) => {
     //   const filePath = request.url.slice((customScheme + '://').length);
