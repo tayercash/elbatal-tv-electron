@@ -384,6 +384,22 @@ class DownloadsManager {
         return { success: true };
     }
 
+    // حذف العملية فقط — الملف المحمّل يفضل مكانه
+    deleteRecord(token) {
+        const entry = this.active.get(token);
+        if (entry) {
+            entry.cancelled = true;
+            entry.controller.abort();
+        }
+        const row = this.getRowByToken(token);
+        if (row) {
+            this.removePartFile(token);
+            this.db.prepare('DELETE FROM downloads WHERE job_token=?').run(token);
+        }
+        this.loadQueue();
+        return { success: true };
+    }
+
     list() {
         const rows = this.db.prepare('SELECT * FROM downloads ORDER BY id DESC LIMIT 200').all();
         return rows.map((r) => this.rowToJob(r));
@@ -418,6 +434,7 @@ class DownloadsManager {
         ipcMain.handle('downloads:cancel', (e, token) => this.cancel(token));
         ipcMain.handle('downloads:resume', (e, token) => this.resume(token));
         ipcMain.handle('downloads:delete', (e, token) => this.deleteJob(token));
+        ipcMain.handle('downloads:delete-record', (e, token) => this.deleteRecord(token));
         ipcMain.handle('downloads:settings', (e, mode, data) => mode === 'set' ? this.setSettings(data || {}) : this.getSettings());
     }
 }
