@@ -20,6 +20,7 @@
 const { app, ipcMain, webContents } = require('electron');
 const path = require('path');
 const fs = require('fs');
+const http = require('http');
 const crypto = require('crypto');
 
 // SQLite: node:sqlite المدمج (مفيش build) مع fallback لـ better-sqlite3 لو متثبت
@@ -42,6 +43,14 @@ const DEFAULT_SETTINGS = {
     max_retries: '3'
 };
 
+const MIME_TYPES = {
+    mp4: 'video/mp4', mkv: 'video/x-matroska', webm: 'video/webm', avi: 'video/x-msvideo',
+    mov: 'video/quicktime', m4v: 'video/x-m4v', m4a: 'audio/mp4', ts: 'video/mp2t',
+    mp3: 'audio/mpeg', aac: 'audio/aac', wav: 'audio/wav', ogg: 'audio/ogg',
+    jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', gif: 'image/gif',
+    webp: 'image/webp', pdf: 'application/pdf', srt: 'text/plain', txt: 'text/plain'
+};
+
 async function fetchWithFallback(url, opts) {
     if (typeof globalThis.fetch === 'function') return globalThis.fetch(url, opts);
     const { net } = require('electron');
@@ -60,6 +69,8 @@ class DownloadsManager {
         this.downloadsEnabled = true;
         this.maxRetries = 3;
         this.broadcastTimer = null;
+        this.fileServer = null;
+        this.fileRoutes = new Map();
     }
 
     init() {
@@ -400,6 +411,75 @@ class DownloadsManager {
         return { success: true };
     }
 
+    // ============================================================
+    // خدمة الملف المحلي عبر localhost HTTP (للتشغيل داخل المشغل)
+    // السبب: CSP + webSecurity في الإلكترون بتمنع file:// من صفحة https
+    // الحل: ندّي للاعب رابط http://127.0.0.1:port/?f=key
+    // ============================================================
+
+    async serveFile(filePath) {
+        if (!filePath || !fs.existsSync(filePath)) return null;
+        if (!this.fileServer) {
+            await new Promise((resolve) => {
+                const server = http.createServer((req, res) => {
+                    try {
+                        if (req.method === 'OPTIONS') {
+                            res.writeHead(204, {
+                                'Access-Control-Allow-Origin': '*',
+                                'Access-Control-Allow-Headers': '*',
+                                'Access-Control-Allow-Methods': 'GET, OPTIONS'
+                            });
+                            res.end();
+                            return;
+                        }
+                        const u = new URL(req.url, 'http://127.0.0.1');
+                        const key = u.searchParams.get('f');
+                        const target = this.fileRoutes.get(key);
+                        if (!target || !fs.existsSync(target)) { res.writeHead(404); res.end(); return; }
+                        this.streamLocalFile(req, res, target);
+                    } catch (e) {
+                        try { res.writeHead(500); res.end(); } catch (e2) { }
+                    }
+                });
+                server.listen(0, '127.0.0.1', () => resolve());
+                this.fileServer = server;
+            });
+        }
+        const key = crypto.randomBytes(8).toString('hex');
+        this.fileRoutes.set(key, filePath);
+        const port = this.fileServer.address().port;
+        return 'http://127.0.0.1:' + port + '/?f=' + key;
+    }
+
+    streamLocalFile(req, res, filePath) {
+        const ext = path.extname(filePath).slice(1).toLowerCase();
+        const type = MIME_TYPES[ext] || 'application/octet-stream';
+        const size = fs.statSync(filePath).size;
+        const baseHeaders = {
+            'Content-Type': type,
+            'Accept-Ranges': 'bytes',
+            'Access-Control-Allow-Origin': '*',
+            'Cache-Control': 'no-cache'
+        };
+        const range = req.headers.range;
+        if (range) {
+            const m = /bytes=(\d+)-(\d*)/.exec(range);
+            if (!m) { res.writeHead(416); res.end(); return; }
+            let start = parseInt(m[1], 10);
+            let end = m[2] ? parseInt(m[2], 10) : size - 1;
+            if (isNaN(start) || start >= size) { res.writeHead(416); res.end(); return; }
+            end = Math.min(end, size - 1);
+            res.writeHead(206, Object.assign(baseHeaders, {
+                'Content-Range': 'bytes ' + start + '-' + end + '/' + size,
+                'Content-Length': end - start + 1
+            }));
+            fs.createReadStream(filePath, { start: start, end: end }).pipe(res);
+        } else {
+            res.writeHead(200, Object.assign(baseHeaders, { 'Content-Length': size }));
+            fs.createReadStream(filePath).pipe(res);
+        }
+    }
+
     list() {
         const rows = this.db.prepare('SELECT * FROM downloads ORDER BY id DESC LIMIT 200').all();
         return rows.map((r) => this.rowToJob(r));
@@ -435,6 +515,7 @@ class DownloadsManager {
         ipcMain.handle('downloads:resume', (e, token) => this.resume(token));
         ipcMain.handle('downloads:delete', (e, token) => this.deleteJob(token));
         ipcMain.handle('downloads:delete-record', (e, token) => this.deleteRecord(token));
+        ipcMain.handle('downloads:serve-file', (e, filePath) => this.serveFile(filePath));
         ipcMain.handle('downloads:settings', (e, mode, data) => mode === 'set' ? this.setSettings(data || {}) : this.getSettings());
     }
 }
