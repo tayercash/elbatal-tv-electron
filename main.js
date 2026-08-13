@@ -153,7 +153,7 @@ const GOOGLE_CLIENT_ID = googleConfig.clientId;
 const GOOGLE_CLIENT_SECRET = googleConfig.clientSecret;
 const REDIRECT_URI = 'http://localhost:19620/callback';
 
-const OAUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=profile%20email&access_type=offline`;
+const OAUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=openid%20profile%20email&access_type=offline`;
 
 const TOKEN_PATH = path.join(app.getPath('userData'), 'tokens.json');  // File to store the tokens
 
@@ -1658,7 +1658,7 @@ function loginWithGooglee() {
       .then(profile => {
         console.log('User profile:', profile);
 
-        mainWindow.webContents.send('g_profile', profile);  // Send profile data to renderer
+        mainWindow.webContents.send('g_profile', { ...profile, idToken: tokens.id_token || null });  // Send profile data to renderer
         gauthCompleted = true;
         loginWindow.close();
       })
@@ -1673,17 +1673,18 @@ function loginWithGooglee() {
             })
             .then(profile => {
               console.log('User profile after refresh:', profile);
+              const updatedTokens = loadTokens() || {};
 
-              mainWindow.webContents.send('g_profile', profile);
+              mainWindow.webContents.send('g_profile', { ...profile, idToken: updatedTokens.id_token || newTokens.id_token || null });
 
             })
             .catch(err => {
               console.error('Failed to refresh token or retrieve profile:', err);
               // If all fails, request login again
-              loginWithGoogle();
+              loginWithGooglee();
             });
         } else {
-          loginWithGoogle();
+          loginWithGooglee();
         }
       });
   } else {
