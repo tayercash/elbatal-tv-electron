@@ -1649,9 +1649,20 @@ ipcMain.handle('open-chellange-window', async (event, url, requestId) => {
   }
 });
 
+let googleLoginInProgress = false;
+
 function loginWithGooglee() {
+  if (googleLoginInProgress) {
+    console.log('Google login attempt already in progress, skipping duplicate call.');
+    return;
+  }
+
   const tokens = loadTokens();
+
+  const finish = () => { googleLoginInProgress = false; };
+
   if (tokens && tokens.access_token) {
+    googleLoginInProgress = true;
     // If tokens exist, try to use them
     console.log('Found saved tokens, attempting to use them.');
     getGoogleProfile(tokens.access_token)
@@ -1660,7 +1671,8 @@ function loginWithGooglee() {
 
         mainWindow.webContents.send('g_profile', { ...profile, idToken: tokens.id_token || null });  // Send profile data to renderer
         gauthCompleted = true;
-        loginWindow.close();
+        if (loginWindow) { loginWindow.close(); }
+        finish();
       })
       .catch(err => {
         // If access token is expired or invalid, try refreshing it
@@ -1676,15 +1688,18 @@ function loginWithGooglee() {
               const updatedTokens = loadTokens() || {};
 
               mainWindow.webContents.send('g_profile', { ...profile, idToken: updatedTokens.id_token || newTokens.id_token || null });
-
+              finish();
             })
             .catch(err => {
               console.error('Failed to refresh token or retrieve profile:', err);
-              // If all fails, request login again
-              loginWithGooglee();
+              // If all fails, notify the renderer instead of retrying endlessly
+              mainWindow.webContents.send('g_error', 'Google login failed, please sign in again.');
+              finish();
             });
         } else {
-          loginWithGooglee();
+          console.error('No refresh token available, opening OAuth flow.');
+          finish();
+          shell.openExternal(OAUTH_URL);
         }
       });
   } else {
